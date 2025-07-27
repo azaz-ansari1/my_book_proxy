@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 
 const app = express();
 
-// Allow requests from your Android app
+// Enable CORS
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   next();
@@ -16,8 +16,9 @@ app.get('/api/books', async (req, res) => {
     const data = await response.json();
     res.json(data);
   } catch (error) {
-    res.status(500).json({ error: 'Proxy failed' });
+    res.status(500).json({ error: 'Proxy failed: ' + error.message });
   }
 });
 
+// Export for Vercel
 module.exports = app;
